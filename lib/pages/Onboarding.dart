@@ -10,6 +10,31 @@ class Onboarding extends StatefulWidget {
 class _OnboardingState extends State<Onboarding> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold();
+    return Scaffold(
+      backgroundColor: Color.fromARGB(255, 243, 228, 210),
+      body: Column(
+        children: [
+
+          SizedBox(height: 50,),
+          Row(mainAxisAlignment: MainAxisAlignment.end,
+            children: [Text("Admin",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 22,color: Colors.black,fontStyle: FontStyle.italic),),SizedBox(width: 20)]),
+          Image.asset("assets/images/bg.png"),
+          SizedBox(height: 40,),
+          Material(
+            elevation: 9,
+              borderRadius: BorderRadius.circular(25),
+            child: Container(
+              padding: EdgeInsets.symmetric(vertical: 12),
+              width: 300,
+              decoration: BoxDecoration(
+                color: Colors.black87,
+                borderRadius: BorderRadius.circular(25)
+              ),
+              child: Center(child: Text("Get Haircut",style: TextStyle(color: Colors.white,fontSize: 30,fontWeight: FontWeight.bold,fontStyle: FontStyle.italic),)),
+            ),
+          )
+        ],
+      ),
+    );
   }
 }
