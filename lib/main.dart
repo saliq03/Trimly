@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:trimly/pages/Login.dart';
 import 'pages/Onboarding.dart';
 
 
@@ -18,7 +19,8 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home:Onboarding()
+      home: LoginUser(),
+      // home:Onboarding()
     );
   }
 }
