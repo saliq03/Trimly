@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -12,9 +14,34 @@ class Booking extends StatefulWidget {
 }
 
 class _BookingState extends State<Booking> {
+  DateTime _selectedDate=DateTime.now();
+  TimeOfDay _selectedTime=TimeOfDay.now();
+
+  Future<void> SelectDate()async{
+    final DateTime? picked=await showDatePicker(
+        context: context,
+        initialDate: _selectedDate,
+        firstDate: DateTime(2024),
+        lastDate: DateTime(2025));
+    if(picked!=null){
+      setState(() {
+        _selectedDate=picked;
+      });
+    }
+  }
+
+  Future<void> SelectTime()async{
+    final TimeOfDay? picked=await showTimePicker(
+        context: context,
+        initialTime: _selectedTime);
+    if(picked!=null){
+      setState(() {
+        _selectedTime=picked;
+      });
+    }
+  }
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
         backgroundColor: Color.fromARGB(255, 245, 228, 210),
       appBar: AppBar(
@@ -23,9 +50,60 @@ class _BookingState extends State<Booking> {
     ),
       body: Container(
         padding: EdgeInsets.symmetric(horizontal: 20,vertical: 10),
-        child: Column(
+        child: Column(crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(" Let's begin\n   the journey",style: TextStyle(fontSize: 30,fontWeight: FontWeight.bold),)
+            Text("Let's begin\nthe journey",style: TextStyle(fontSize: 30,fontWeight: FontWeight.bold),),
+            SizedBox(height: 30,),
+            ClipRRect(borderRadius: BorderRadius.circular(25),
+                child: Image.asset("assets/images/off.jpg",width: MediaQuery.of(context).size.width,)),
+            SizedBox(height: 20,),
+
+            Text(widget.Service,style: TextStyle(color:Colors.black,fontWeight: FontWeight.bold,fontSize: 30),),
+
+            Container(
+              margin: EdgeInsets.symmetric(vertical: 10),
+              height: 150,
+              width: MediaQuery.of(context).size.width,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(22),
+                color: Color(0xFF3E2723)
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text("Set Date",style: TextStyle(color: Colors.white70,fontSize: 20),),
+                  SizedBox(height: 10,),
+                  Row(mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                    IconButton(onPressed: (){SelectDate();}, icon: Icon(Icons.calendar_month,color: Colors.white,size: 30,)),
+                    Text("${_selectedDate.day}/${_selectedDate.month}/${_selectedDate.year}",style: TextStyle(color: Colors.white,fontSize: 25,fontWeight: FontWeight.bold),),
+                  ],)
+                ],
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.symmetric(vertical: 10),
+              height: 150,
+              width: MediaQuery.of(context).size.width,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(22),
+                  color: Color(0xFF3E2723)
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text("Set Time",style: TextStyle(color: Colors.white70,fontSize: 20),),
+                  SizedBox(height: 10,),
+                  Row(mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      IconButton(onPressed: (){SelectTime();}, icon: Icon(CupertinoIcons.clock_fill,color: Colors.white,size: 30,)),
+                      Text(_selectedTime.format(context),style: TextStyle(color: Colors.white,fontSize: 25,fontWeight: FontWeight.bold),),
+                    ],)
+                ],
+              ),
+            ),
+
+
           ],
         ),
       ),
