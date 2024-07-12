@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'Booking.dart';
+
 class Home extends StatefulWidget {
   const Home({super.key});
 
@@ -69,18 +71,23 @@ class _HomeState extends State<Home> {
   MyServices(String image,String title){
     return Flexible(
       fit:FlexFit.tight,
-      child: Container(
-        height: 170,
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(22),
-            color: Color(0xFF3E2723)
-        ),
-        child: Column(mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Image.asset(image,width: 80,height: 80,),
-            SizedBox(height: 20,),
-            Text(title,style: TextStyle(color: Colors.white,fontSize: 20,fontWeight: FontWeight.bold),)
-          ],
+      child: GestureDetector(
+        onTap: (){
+          Navigator.push(context, MaterialPageRoute(builder: (context)=>Booking(Service: title)));
+        },
+        child: Container(
+          height: 170,
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(22),
+              color: Color(0xFF3E2723)
+          ),
+          child: Column(mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Image.asset(image,width: 80,height: 80,),
+              SizedBox(height: 20,),
+              Text(title,style: TextStyle(color: Colors.white,fontSize: 20,fontWeight: FontWeight.bold),)
+            ],
+          ),
         ),
       ),
     );
