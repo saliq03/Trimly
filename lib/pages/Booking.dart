@@ -62,7 +62,7 @@ class _BookingState extends State<Booking> {
 
             Container(
               margin: EdgeInsets.symmetric(vertical: 10),
-              height: 150,
+              height: 130,
               width: MediaQuery.of(context).size.width,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(22),
@@ -83,7 +83,7 @@ class _BookingState extends State<Booking> {
             ),
             Container(
               margin: EdgeInsets.symmetric(vertical: 10),
-              height: 150,
+              height: 130,
               width: MediaQuery.of(context).size.width,
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(22),
@@ -102,7 +102,16 @@ class _BookingState extends State<Booking> {
                 ],
               ),
             ),
-
+            SizedBox(height: 5),
+            GestureDetector(
+              child: Container(
+                padding: EdgeInsets.symmetric(vertical: 7),
+                width: MediaQuery.of(context).size.width,
+                decoration: BoxDecoration(
+                    color: Colors.orangeAccent,
+                    borderRadius: BorderRadius.circular(22)),
+                child: Center(child: Text("BOOK NOW",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30,color: Colors.white),)),),
+            ),
 
           ],
         ),
