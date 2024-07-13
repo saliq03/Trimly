@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "648454734421",
+    "project_id": "trimly-61b9f",
+    "storage_bucket": "trimly-61b9f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:648454734421:android:f07f9bfc9731a5b6e30adc",
+        "android_client_info": {
+          "package_name": "com.example.trimly"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB-QmMT1zMUBxWOVNDQXgSJA6egBxZZ3rk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
