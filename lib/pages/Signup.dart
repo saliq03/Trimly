@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:trimly/pages/Login.dart';
@@ -96,6 +97,7 @@ class _SignupUserState extends State<SignupUser> {
                         onTap: (){
                           FocusScope.of(context).unfocus();
                           _formKey.currentState!.validate();
+                          SigningUpUser();
                         },
                         child: Container(
                           padding: EdgeInsets.symmetric(vertical: 7),
@@ -134,5 +136,26 @@ class _SignupUserState extends State<SignupUser> {
         ),
       ),
     );
+  }
+
+  SigningUpUser() async {
+    if(passwordController.text!=''&& emailController.text!=''&& nameController.text!='') {
+      try {
+        print("i am here");
+        UserCredential userCredential = await FirebaseAuth.instance
+            .createUserWithEmailAndPassword(
+            email: emailController.text,
+            password: passwordController.text);
+       await userCredential.user?.sendEmailVerification();
+      }
+
+      on FirebaseAuthException catch (ex) {
+        if (ex.code == "weak-password") {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text("Weak password",style: TextStyle(color: Colors.white),),backgroundColor: Colors.red,)
+          );
+        }
+      }
+    }
   }
 }
