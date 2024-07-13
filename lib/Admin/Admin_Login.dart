@@ -29,7 +29,7 @@ class _AdminLoginState extends State<AdminLogin> {
                     Color(0xFF621d3c),
                     Color(0xFF311937),
                   ])),
-              child: Text("Hello\nSign in!",style: TextStyle(color: Colors.white,fontSize: 35,fontWeight: FontWeight.bold),),
+              child: Text("Let's start with\nAdmin",style: TextStyle(color: Colors.white,fontSize: 35,fontWeight: FontWeight.bold),),
             ),
             Align(
               alignment: Alignment.bottomCenter,
@@ -93,7 +93,7 @@ class _AdminLoginState extends State<AdminLogin> {
                                 Color(0xFF311937),
                               ]),
                               borderRadius: BorderRadius.circular(22)),
-                          child: Center(child: Text("Sign In",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30,color: Colors.white),)),),
+                          child: Center(child: Text("LogIn",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30,color: Colors.white),)),),
                       ),
 
 
