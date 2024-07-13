@@ -10,6 +10,7 @@ class SignupUser extends StatefulWidget {
 }
 
 class _SignupUserState extends State<SignupUser> {
+  TextEditingController nameController=TextEditingController();
   TextEditingController emailController=TextEditingController();
   TextEditingController passwordController=TextEditingController();
   final GlobalKey<FormState> _formKey=GlobalKey<FormState>();
@@ -35,7 +36,7 @@ class _SignupUserState extends State<SignupUser> {
             Align(
               alignment: Alignment.bottomCenter,
               child: Container(
-                margin: EdgeInsets.only(top: mediaQuery.height*.06),
+                margin: EdgeInsets.only(top: 5),
                 padding: EdgeInsets.only(top: 40,left: 30,right: 30),
                 width: mediaQuery.width,
                 height: mediaQuery.height/1.35,
@@ -49,9 +50,8 @@ class _SignupUserState extends State<SignupUser> {
                     children: [
 
                       Text("Name",style: TextStyle(fontWeight: FontWeight.w500,fontSize: 25,color: Color(0xFFB91635),),),
-                      SizedBox(height: 10,),
                       TextFormField(
-                          controller: emailController,
+                          controller: nameController,
                           decoration: InputDecoration(
                               hintText: "Username",
                               prefixIcon: Icon(CupertinoIcons.person)
@@ -62,9 +62,8 @@ class _SignupUserState extends State<SignupUser> {
                             }
                             return null;
                           }),
-                      SizedBox(height: 40,),
+                      SizedBox(height: 20,),
                       Text("Email",style: TextStyle(fontWeight: FontWeight.w500,fontSize: 25,color: Color(0xFFB91635),),),
-                      SizedBox(height: 10,),
                       TextFormField(
                           controller: emailController,
                           decoration: InputDecoration(
@@ -77,9 +76,8 @@ class _SignupUserState extends State<SignupUser> {
                             }
                             return null;
                           }),
-                      SizedBox(height: 40,),
+                      SizedBox(height: 20,),
                       Text("Password",style: TextStyle(fontWeight: FontWeight.w500,fontSize: 25,color: Color(0xFFB91635),),),
-                      SizedBox(height: 10,),
                       TextFormField(
                           controller: passwordController,
                           obscureText: true,
@@ -93,11 +91,10 @@ class _SignupUserState extends State<SignupUser> {
                             }
                             return null;
                           }),
-                      SizedBox(height: 20,),
-
-                      SizedBox(height: 7,),
+                      SizedBox(height: 25,),
                       GestureDetector(
                         onTap: (){
+                          FocusScope.of(context).unfocus();
                           _formKey.currentState!.validate();
                         },
                         child: Container(
@@ -112,8 +109,6 @@ class _SignupUserState extends State<SignupUser> {
                               borderRadius: BorderRadius.circular(22)),
                           child: Center(child: Text("Sign Up",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30,color: Colors.white),)),),
                       ),
-
-                      SizedBox(height: 40,),
                       Spacer(),
                       Divider(thickness: 2,),
                       GestureDetector(
@@ -126,7 +121,7 @@ class _SignupUserState extends State<SignupUser> {
                               Text("Sign in",style: TextStyle(color: Color(0xFF621d3c),fontSize: 15,fontWeight: FontWeight.bold),),
                             ]),
                       ),
-                      SizedBox(height: 30,)
+                      SizedBox(height: 20,)
 
 
                     ],

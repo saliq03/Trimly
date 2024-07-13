@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:trimly/Admin/Admin_Login.dart';
 import 'package:trimly/pages/Home.dart';
+import 'package:trimly/pages/Login.dart';
 
 class Onboarding extends StatefulWidget {
   const Onboarding({super.key});
@@ -18,12 +20,15 @@ class _OnboardingState extends State<Onboarding> {
 
           SizedBox(height: 50,),
           Row(mainAxisAlignment: MainAxisAlignment.end,
-            children: [Text("Admin",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 22,color: Colors.black,fontStyle: FontStyle.italic),),SizedBox(width: 20)]),
+            children: [GestureDetector(onTap: (){
+              Navigator.push(context, MaterialPageRoute(builder: (context)=>AdminLogin()));
+            },
+                child: Text("Admin",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 22,color: Colors.black,fontStyle: FontStyle.italic),)),SizedBox(width: 20)]),
           Image.asset("assets/images/bg.png"),
           SizedBox(height: 40,),
           GestureDetector(
             onTap: (){
-              Navigator.push(context, MaterialPageRoute(builder: (context)=>Home()));
+              Navigator.push(context, MaterialPageRoute(builder: (context)=>LoginUser()));
             },
             child: Material(
               elevation: 9,
