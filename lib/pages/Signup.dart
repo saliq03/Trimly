@@ -146,8 +146,8 @@ class _SignupUserState extends State<SignupUser> {
             .createUserWithEmailAndPassword(
             email: emailController.text,
             password: passwordController.text);
-       await userCredential.user?.sendEmailVerification();
        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>Emailverification(email:  emailController.text, name: nameController.text)));
+        await userCredential.user?.sendEmailVerification();
       }
 
       on FirebaseAuthException catch (ex) {

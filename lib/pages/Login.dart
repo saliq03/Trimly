@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:trimly/pages/Home.dart';
 import 'package:trimly/pages/Signup.dart';
@@ -13,6 +15,8 @@ class _LoginUserState extends State<LoginUser> {
   TextEditingController emailController=TextEditingController();
   TextEditingController passwordController=TextEditingController();
    final GlobalKey<FormState> _formKey=GlobalKey<FormState>();
+
+   bool userfound=false;
   @override
   Widget build(BuildContext context) {
     Size mediaQuery=MediaQuery.of(context).size;
@@ -89,7 +93,8 @@ class _LoginUserState extends State<LoginUser> {
                         onTap: (){
                           FocusScope.of(context).unfocus();
                           _formKey.currentState!.validate();
-                          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>Home()));
+                          LogingInUser();
+
                         },
                         child: Container(
                           padding: EdgeInsets.symmetric(vertical: 7),
@@ -130,4 +135,37 @@ class _LoginUserState extends State<LoginUser> {
       ),
     );
   }
+  LogingInUser() {
+    if (emailController != '' && passwordController.text != ''){
+      FirebaseFirestore.instance.collection("Users").get().then((snapshot) {
+        snapshot.docs.forEach((user) async {
+          if (user.data()["Email"] == emailController.text) {
+            userfound=true;
+            try {
+              await FirebaseAuth.instance.signInWithEmailAndPassword(
+                  email: emailController.text,
+                  password: passwordController.text);
+              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>Home()));
+            }
+            on FirebaseAuthException catch (ex) {
+              print(ex.code.toString());
+              if (ex.code == 'wrong-password'|| ex.code=='invalid-credential') {
+                ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Center(
+                        child: Text("Incorrect password", style: TextStyle(
+                            color: Colors.white),)),
+                      backgroundColor: Colors.red,));
+              }}
+          }
+        });
+        if(!userfound){
+          ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Center(
+                  child: Text("User not found", style: TextStyle(
+                      color: Colors.white),)),
+                backgroundColor: Colors.red,));
+        }
+        userfound =false;
+      });
+    }}
 }
