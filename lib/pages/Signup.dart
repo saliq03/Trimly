@@ -153,7 +153,12 @@ class _SignupUserState extends State<SignupUser> {
       on FirebaseAuthException catch (ex) {
         if (ex.code == "weak-password") {
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text("Weak password",style: TextStyle(color: Colors.white),),backgroundColor: Colors.red,)
+            SnackBar(content: Center(child: Text("Weak password",style: TextStyle(color: Colors.white),)),backgroundColor: Colors.red,)
+          );
+        }
+        if(ex.code=="email-already-in-use"){
+          ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Center(child: Text("Account already exist",style: TextStyle(color: Colors.white),)),backgroundColor: Colors.orangeAccent,)
           );
         }
       }

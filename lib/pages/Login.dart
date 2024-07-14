@@ -89,7 +89,7 @@ class _LoginUserState extends State<LoginUser> {
                         onTap: (){
                           FocusScope.of(context).unfocus();
                           _formKey.currentState!.validate();
-                          Navigator.push(context, MaterialPageRoute(builder: (context)=>Home()));
+                          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>Home()));
                         },
                         child: Container(
                           padding: EdgeInsets.symmetric(vertical: 7),

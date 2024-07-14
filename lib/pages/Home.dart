@@ -16,7 +16,7 @@ class _HomeState extends State<Home> {
       backgroundColor: Color.fromARGB(255, 245, 228, 210),
       body: Column(crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(height: 30,),
+          SizedBox(height: 20,),
           Container(padding: EdgeInsets.symmetric(horizontal: 20,vertical: 20),
             child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -25,9 +25,14 @@ class _HomeState extends State<Home> {
                     Text("Hello,",style: TextStyle(fontSize: 25,),),
                     Text("Saliq Javid",style: TextStyle(fontSize: 25,fontWeight: FontWeight.bold),)
                   ]),
-
-                Image.asset("assets/images/bg.png",height: 70,width: 70,fit: BoxFit.cover,)
+                GestureDetector(onTap: (){
+                },
+                    child: Image.asset("assets/images/bg.png",height: 70,width: 70,fit: BoxFit.cover,))
               ])),
+          Row(mainAxisAlignment:MainAxisAlignment.end, children: [GestureDetector(onTap: (){
+            Navigator.pop(context);
+          },
+            child: Text("Log out   ",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,fontStyle: FontStyle.italic),),)],),
           Divider(color: Colors.black,),
           Container(
             padding: EdgeInsets.symmetric(horizontal: 25,vertical: 10),
@@ -92,4 +97,6 @@ class _HomeState extends State<Home> {
       ),
     );
   }
-}
+
+  }
+
