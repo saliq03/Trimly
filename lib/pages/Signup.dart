@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:trimly/pages/EmailVerification.dart';
 import 'package:trimly/pages/Login.dart';
 
 class SignupUser extends StatefulWidget {
@@ -141,12 +142,12 @@ class _SignupUserState extends State<SignupUser> {
   SigningUpUser() async {
     if(passwordController.text!=''&& emailController.text!=''&& nameController.text!='') {
       try {
-        print("i am here");
         UserCredential userCredential = await FirebaseAuth.instance
             .createUserWithEmailAndPassword(
             email: emailController.text,
             password: passwordController.text);
        await userCredential.user?.sendEmailVerification();
+       Navigator.push(context, MaterialPageRoute(builder: (context)=>Emailverification()));
       }
 
       on FirebaseAuthException catch (ex) {

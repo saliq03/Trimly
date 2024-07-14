@@ -1,5 +1,9 @@
+import 'dart:async';
+
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:trimly/pages/Home.dart';
 
 class Emailverification extends StatefulWidget {
   const Emailverification({super.key});
@@ -9,6 +13,31 @@ class Emailverification extends StatefulWidget {
 }
 
 class _EmailverificationState extends State<Emailverification> {
+  FirebaseAuth _auth=FirebaseAuth.instance;
+  late Timer timer;
+
+  @override
+  void initState() {
+    super.initState();
+    timer=Timer.periodic(Duration(seconds: 3), (timer){
+      _auth.currentUser?.reload();
+      if(_auth.currentUser?.emailVerified==true){
+        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>Home()));
+        ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content:Text("Registered sucessfully"),backgroundColor: Colors.green,));
+      }
+    });
+  }
+
+ @override
+  void dispose() {
+   timer.cancel();
+   super.dispose();
+   if(_auth.currentUser?.emailVerified!=true){
+     EmailNotVerified();
+   }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -16,7 +45,6 @@ class _EmailverificationState extends State<Emailverification> {
       body: Container(
         padding: EdgeInsets.only(top: 100),
         child: Column(
-
           children: [
             SizedBox(width: MediaQuery.of(context).size.width,height: MediaQuery.of(context).size.height*0.1,),
             Icon(CupertinoIcons.mail,color: Colors.white,size: 80,),
@@ -40,5 +68,9 @@ class _EmailverificationState extends State<Emailverification> {
         ),
       ),
     );
+  }
+
+  EmailNotVerified() async {
+    await _auth.signOut();
   }
 }
