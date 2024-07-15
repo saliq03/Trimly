@@ -5,6 +5,8 @@ import 'package:trimly/pages/Forgetpassword.dart';
 import 'package:trimly/pages/Home.dart';
 import 'package:trimly/pages/Signup.dart';
 
+import '../Database/SharedPrefrenceHelper.dart';
+
 class LoginUser extends StatefulWidget {
   const LoginUser({super.key});
 
@@ -140,6 +142,7 @@ class _LoginUserState extends State<LoginUser> {
   }
   LogingInUser() {
     if (emailController != '' && passwordController.text != ''){
+      FocusScope.of(context).unfocus();
       showDialog(context: context,
           builder: (context)=>Center(child: CircularProgressIndicator()));
       FirebaseFirestore.instance.collection("Users").get().then((snapshot) {
@@ -151,7 +154,9 @@ class _LoginUserState extends State<LoginUser> {
                   email: emailController.text,
                   password: passwordController.text);
               Navigator.pop(context);
+              FocusScope.of(context).unfocus();
               Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>Home()));
+              SharedprefrenceHelper().SetLoginkey(true);
             }
             on FirebaseAuthException catch (ex) {
               Navigator.pop(context);

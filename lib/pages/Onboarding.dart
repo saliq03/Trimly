@@ -3,6 +3,8 @@ import 'package:trimly/Admin/Admin_Login.dart';
 import 'package:trimly/pages/Home.dart';
 import 'package:trimly/pages/Login.dart';
 
+import '../Database/SharedPrefrenceHelper.dart';
+
 class Onboarding extends StatefulWidget {
   const Onboarding({super.key});
 
@@ -27,7 +29,11 @@ class _OnboardingState extends State<Onboarding> {
           Image.asset("assets/images/bg.png"),
           SizedBox(height: 40,),
           GestureDetector(
-            onTap: (){
+            onTap: () async {
+              bool? loginKey=await SharedprefrenceHelper().GetLoginkey();
+              if(loginKey==true){
+                Navigator.push(context, MaterialPageRoute(builder: (context)=>Home()));
+              }
               Navigator.push(context, MaterialPageRoute(builder: (context)=>LoginUser()));
             },
             child: Material(

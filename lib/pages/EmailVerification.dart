@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:trimly/Database/Databasemethods.dart';
+import 'package:trimly/Database/SharedPrefrenceHelper.dart';
 import 'package:trimly/pages/Home.dart';
 
 class Emailverification extends StatefulWidget {
@@ -31,6 +32,7 @@ class _EmailverificationState extends State<Emailverification>{
         Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>Home()));
         ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content:Text("Registered sucessfully"),backgroundColor: Colors.green,));
+        SharedprefrenceHelper().SetLoginkey(true);
         UploadUserDetails();
       }
     });

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../Database/SharedPrefrenceHelper.dart';
 import 'Booking.dart';
 
 class Home extends StatefulWidget {
@@ -31,6 +32,7 @@ class _HomeState extends State<Home> {
               ])),
           Row(mainAxisAlignment:MainAxisAlignment.end, children: [GestureDetector(onTap: (){
             Navigator.pop(context);
+            SharedprefrenceHelper().SetLoginkey(false);
           },
             child: Text("Log out   ",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,fontStyle: FontStyle.italic),),)],),
           Divider(color: Colors.black,),
