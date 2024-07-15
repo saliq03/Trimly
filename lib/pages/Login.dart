@@ -142,7 +142,6 @@ class _LoginUserState extends State<LoginUser> {
   }
   LogingInUser() {
     if (emailController != '' && passwordController.text != ''){
-      FocusScope.of(context).unfocus();
       showDialog(context: context,
           builder: (context)=>Center(child: CircularProgressIndicator()));
       FirebaseFirestore.instance.collection("Users").get().then((snapshot) {
@@ -155,8 +154,9 @@ class _LoginUserState extends State<LoginUser> {
                   password: passwordController.text);
               Navigator.pop(context);
               FocusScope.of(context).unfocus();
+              SetSharedpref(user.data()["Name"]);
               Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>Home()));
-              SharedprefrenceHelper().SetLoginkey(true);
+
             }
             on FirebaseAuthException catch (ex) {
               Navigator.pop(context);
@@ -181,4 +181,10 @@ class _LoginUserState extends State<LoginUser> {
         userfound =false;
       });
     }}
+
+  SetSharedpref(String name){
+    SharedprefrenceHelper().SetLoginkey(true);
+    SharedprefrenceHelper().SetUserName(name);
+    SharedprefrenceHelper().SetUserEmail(emailController.text);
+  }
 }

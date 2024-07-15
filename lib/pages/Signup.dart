@@ -1,6 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:trimly/Database/SharedPrefrenceHelper.dart';
 import 'package:trimly/pages/EmailVerification.dart';
 import 'package:trimly/pages/Login.dart';
 
@@ -141,16 +143,20 @@ class _SignupUserState extends State<SignupUser> {
 
   SigningUpUser() async {
     if(passwordController.text!=''&& emailController.text!=''&& nameController.text!='') {
+      showDialog(context: context,
+          builder: (context)=>Center(child: CircularProgressIndicator()));
       try {
         UserCredential userCredential = await FirebaseAuth.instance
             .createUserWithEmailAndPassword(
             email: emailController.text,
             password: passwordController.text);
+        Navigator.pop(context);
        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>Emailverification(email:  emailController.text, name: nameController.text)));
         await userCredential.user?.sendEmailVerification();
       }
 
       on FirebaseAuthException catch (ex) {
+        Navigator.pop(context);
         if (ex.code == "weak-password") {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Center(child: Text("Weak password",style: TextStyle(color: Colors.white),)),backgroundColor: Colors.red,)

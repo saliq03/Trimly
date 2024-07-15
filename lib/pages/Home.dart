@@ -11,6 +11,13 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  late String? name;
+
+@override
+  void initState() {
+   GetSharedprefData();
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,7 +31,7 @@ class _HomeState extends State<Home> {
                 Column(crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text("Hello,",style: TextStyle(fontSize: 25,),),
-                    Text("Saliq Javid",style: TextStyle(fontSize: 25,fontWeight: FontWeight.bold),)
+                    Text(name!,style: TextStyle(fontSize: 25,fontWeight: FontWeight.bold),)
                   ]),
                 GestureDetector(onTap: (){
                 },
@@ -99,6 +106,9 @@ class _HomeState extends State<Home> {
       ),
     );
   }
-
+  GetSharedprefData()async{
+    name=await SharedprefrenceHelper().GetUserName();
+    setState(() {});
+  }
   }
 

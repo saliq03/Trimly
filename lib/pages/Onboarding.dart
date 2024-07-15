@@ -13,6 +13,9 @@ class Onboarding extends StatefulWidget {
 }
 
 class _OnboardingState extends State<Onboarding> {
+  bool? loginKey;
+  @override
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,11 +33,14 @@ class _OnboardingState extends State<Onboarding> {
           SizedBox(height: 40,),
           GestureDetector(
             onTap: () async {
-              bool? loginKey=await SharedprefrenceHelper().GetLoginkey();
+              loginKey=await SharedprefrenceHelper().GetLoginkey();
               if(loginKey==true){
                 Navigator.push(context, MaterialPageRoute(builder: (context)=>Home()));
               }
-              Navigator.push(context, MaterialPageRoute(builder: (context)=>LoginUser()));
+              else {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => LoginUser()));
+              }
             },
             child: Material(
               elevation: 9,
@@ -54,4 +60,5 @@ class _OnboardingState extends State<Onboarding> {
       ),
     );
   }
+
 }

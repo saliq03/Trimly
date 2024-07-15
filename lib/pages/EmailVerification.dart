@@ -29,10 +29,10 @@ class _EmailverificationState extends State<Emailverification>{
     timer=Timer.periodic(Duration(seconds: 3), (timer){
       _auth.currentUser?.reload();
       if(_auth.currentUser?.emailVerified==true){
+        SetSharedpref();
         Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>Home()));
         ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content:Text("Registered sucessfully"),backgroundColor: Colors.green,));
-        SharedprefrenceHelper().SetLoginkey(true);
         UploadUserDetails();
       }
     });
@@ -94,5 +94,11 @@ class _EmailverificationState extends State<Emailverification>{
 
   UploadUserDetails(){
     Databasemethods().AddUserDetails(widget.name, widget.email);
+  }
+
+  SetSharedpref(){
+    SharedprefrenceHelper().SetLoginkey(true);
+    SharedprefrenceHelper().SetUserName(widget.name);
+    SharedprefrenceHelper().SetUserEmail(widget.email);
   }
 }
