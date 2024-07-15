@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:trimly/pages/Forgetpassword.dart';
 import 'package:trimly/pages/Home.dart';
 import 'package:trimly/pages/Signup.dart';
 
@@ -85,7 +86,10 @@ class _LoginUserState extends State<LoginUser> {
 
                       Row(mainAxisAlignment: MainAxisAlignment.end,
                         children: [
-                          Text("Forgot Password?",style: TextStyle(color: Color(0xFF311937),fontSize: 20),),
+                          GestureDetector(onTap: (){
+                            Navigator.push(context, MaterialPageRoute(builder: (context)=>Forgetpassword()));
+                          },
+                              child: Text("Forgot Password?",style: TextStyle(color: Color(0xFF311937),fontSize: 20),)),
                         ],
                       ),
                       SizedBox(height: 7,),
@@ -94,7 +98,6 @@ class _LoginUserState extends State<LoginUser> {
                           FocusScope.of(context).unfocus();
                           _formKey.currentState!.validate();
                           LogingInUser();
-
                         },
                         child: Container(
                           padding: EdgeInsets.symmetric(vertical: 7),
