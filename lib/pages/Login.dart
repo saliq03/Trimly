@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:trimly/pages/Forgetpassword.dart';
 import 'package:trimly/pages/Home.dart';
@@ -97,7 +98,7 @@ class _LoginUserState extends State<LoginUser> {
                       SizedBox(height: 7,),
                       GestureDetector(
                         onTap: (){
-                          FocusScope.of(context).unfocus();
+                          // FocusScope.of(context).unfocus();
                           _formKey.currentState!.validate();
                           LogingInUser();
                         },
@@ -142,6 +143,7 @@ class _LoginUserState extends State<LoginUser> {
   }
   LogingInUser() {
     if (emailController != '' && passwordController.text != ''){
+
       showDialog(context: context,
           builder: (context)=>Center(child: CircularProgressIndicator()));
       FirebaseFirestore.instance.collection("Users").get().then((snapshot) {
@@ -152,14 +154,15 @@ class _LoginUserState extends State<LoginUser> {
               await FirebaseAuth.instance.signInWithEmailAndPassword(
                   email: emailController.text,
                   password: passwordController.text);
-              Navigator.pop(context);
+              Navigator.of(context).popUntil((route)=>route.isFirst);
               FocusScope.of(context).unfocus();
               SetSharedpref(user.data()["Name"]);
-              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>Home()));
+              Navigator.push(context, MaterialPageRoute(builder: (context)=>Home()));
 
             }
             on FirebaseAuthException catch (ex) {
-              Navigator.pop(context);
+              Navigator.of(context).pop();
+              FocusScope.of(context).unfocus();
               print(ex.code.toString());
               if (ex.code == 'wrong-password'|| ex.code=='invalid-credential') {
                 ScaffoldMessenger.of(context).showSnackBar(

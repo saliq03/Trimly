@@ -150,8 +150,8 @@ class _SignupUserState extends State<SignupUser> {
             .createUserWithEmailAndPassword(
             email: emailController.text,
             password: passwordController.text);
-        Navigator.pop(context);
-       Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>Emailverification(email:  emailController.text, name: nameController.text)));
+        Navigator.of(context).popUntil((route)=>route.isFirst);
+       Navigator.push(context, MaterialPageRoute(builder: (context)=>Emailverification(email:  emailController.text, name: nameController.text)));
         await userCredential.user?.sendEmailVerification();
       }
 
