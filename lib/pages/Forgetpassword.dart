@@ -98,13 +98,14 @@ class _ForgetpasswordState extends State<Forgetpassword> {
           builder: (context)=>Center(child: CircularProgressIndicator()));
       try{
        await FirebaseAuth.instance.sendPasswordResetEmail(email: emailController.text);
+       Navigator.pop(context);
        ScaffoldMessenger.of(context).showSnackBar(
            SnackBar(content: Center(
                child: Text("Password reset email has been sent to the given email", style: TextStyle(
-                   color: Colors.white),)),
-             backgroundColor: Colors.black26,));
+                   color: Colors.white),))));
        Navigator.pop(context);
       } on FirebaseAuthException catch(ex){
+        Navigator.pop(context);
         print(ex.toString());
         if(ex.code=='user-not-found'){
           ScaffoldMessenger.of(context).showSnackBar(

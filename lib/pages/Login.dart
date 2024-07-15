@@ -140,6 +140,8 @@ class _LoginUserState extends State<LoginUser> {
   }
   LogingInUser() {
     if (emailController != '' && passwordController.text != ''){
+      showDialog(context: context,
+          builder: (context)=>Center(child: CircularProgressIndicator()));
       FirebaseFirestore.instance.collection("Users").get().then((snapshot) {
         snapshot.docs.forEach((user) async {
           if (user.data()["Email"] == emailController.text) {
@@ -148,9 +150,11 @@ class _LoginUserState extends State<LoginUser> {
               await FirebaseAuth.instance.signInWithEmailAndPassword(
                   email: emailController.text,
                   password: passwordController.text);
+              Navigator.pop(context);
               Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>Home()));
             }
             on FirebaseAuthException catch (ex) {
+              Navigator.pop(context);
               print(ex.code.toString());
               if (ex.code == 'wrong-password'|| ex.code=='invalid-credential') {
                 ScaffoldMessenger.of(context).showSnackBar(
@@ -162,6 +166,7 @@ class _LoginUserState extends State<LoginUser> {
           }
         });
         if(!userfound){
+          Navigator.pop(context);
           ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(content: Center(
                   child: Text("User not found", style: TextStyle(
