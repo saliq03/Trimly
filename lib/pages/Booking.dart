@@ -2,6 +2,9 @@ import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:trimly/Database/Databasemethods.dart';
+
+import '../Database/SharedPrefrenceHelper.dart';
 
 class Booking extends StatefulWidget {
  final String Service;
@@ -16,6 +19,8 @@ class Booking extends StatefulWidget {
 class _BookingState extends State<Booking> {
   DateTime _selectedDate=DateTime.now();
   TimeOfDay _selectedTime=TimeOfDay.now();
+  late String? Email;
+  late String? Name;
 
   Future<void> SelectDate()async{
     final DateTime? picked=await showDatePicker(
@@ -104,6 +109,9 @@ class _BookingState extends State<Booking> {
             ),
             SizedBox(height: 5),
             GestureDetector(
+              onTap: (){
+                UploadBooking();
+              },
               child: Container(
                 padding: EdgeInsets.symmetric(vertical: 7),
                 width: MediaQuery.of(context).size.width,
@@ -117,5 +125,25 @@ class _BookingState extends State<Booking> {
         ),
       ),
     );
+  }
+
+  UploadBooking() async {
+    showDialog(context: context,
+        builder: (context)=>Center(child: CircularProgressIndicator()));
+    Name=await SharedprefrenceHelper().GetUserName();
+    Email=await SharedprefrenceHelper().GetUserEmail();
+    await Databasemethods().AddBooking(
+        Email!,
+        Name!,
+        widget.Service,
+        "${_selectedDate.day}/${_selectedDate.month}/${_selectedDate.year}",
+        _selectedTime.format(context).toString()).then((value){
+      Navigator.of(context).popUntil((route)=>route.isCurrent);
+      ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Center(
+              child: Text("Service has been added Successfully.", style: TextStyle(
+                  color: Colors.white),))));
+    });
+
   }
 }

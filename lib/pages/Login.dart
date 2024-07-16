@@ -19,6 +19,7 @@ class _LoginUserState extends State<LoginUser> {
   TextEditingController emailController=TextEditingController();
   TextEditingController passwordController=TextEditingController();
    final GlobalKey<FormState> _formKey=GlobalKey<FormState>();
+  final emailRegex = RegExp(r'^[^@]+@[^@]+\.[^@]+');
 
    bool userfound=false;
   @override
@@ -67,7 +68,11 @@ class _LoginUserState extends State<LoginUser> {
                           if(value==null||value.isEmpty){
                             return "Please enter email";
                           }
-                          return null;
+                          else if(!emailRegex.hasMatch(emailController.text.trim())) {
+                            return "Enter valid Email";
+                          }
+                            return null;
+
                       }),
                       SizedBox(height: 40,),
                       Text("Password",style: TextStyle(fontWeight: FontWeight.w500,fontSize: 25,color: Color(0xFFB91635),),),
@@ -98,9 +103,9 @@ class _LoginUserState extends State<LoginUser> {
                       SizedBox(height: 7,),
                       GestureDetector(
                         onTap: (){
-                          // FocusScope.of(context).unfocus();
-                          _formKey.currentState!.validate();
-                          LogingInUser();
+                          if(_formKey.currentState!.validate()) {
+                            LogingInUser();
+                          }
                         },
                         child: Container(
                           padding: EdgeInsets.symmetric(vertical: 7),

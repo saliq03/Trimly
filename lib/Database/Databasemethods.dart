@@ -11,4 +11,17 @@ class Databasemethods{
       "Image":"abc"
     });
   }
+
+  AddBooking(String email,String name,String service,String date,String time)async{
+    await FirebaseFirestore.instance.
+    collection("Bookings").
+    doc(email).
+    set({
+      "Email":email,
+      "Name": name,
+      "Service": service,
+      "Date": date,
+      "Time": time
+    });
+  }
 }
