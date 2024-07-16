@@ -1,8 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:trimly/Database/SharedPrefrenceHelper.dart';
 import 'package:trimly/pages/EmailVerification.dart';
 import 'package:trimly/pages/Login.dart';
 
@@ -18,6 +16,7 @@ class _SignupUserState extends State<SignupUser> {
   TextEditingController emailController=TextEditingController();
   TextEditingController passwordController=TextEditingController();
   final GlobalKey<FormState> _formKey=GlobalKey<FormState>();
+  final emailRegex = RegExp(r'^[^@]+@[^@]+\.[^@]+');
   @override
   Widget build(BuildContext context) {
     Size mediaQuery=MediaQuery.of(context).size;
@@ -78,6 +77,9 @@ class _SignupUserState extends State<SignupUser> {
                             if(value==null||value.isEmpty){
                               return "Please enter Email";
                             }
+                            else if(!emailRegex.hasMatch(emailController.text.trim())) {
+                              return "Enter valid Email";
+                            }
                             return null;
                           }),
                       SizedBox(height: 20,),
@@ -99,8 +101,9 @@ class _SignupUserState extends State<SignupUser> {
                       GestureDetector(
                         onTap: (){
                           FocusScope.of(context).unfocus();
-                          _formKey.currentState!.validate();
-                          SigningUpUser();
+                          if(_formKey.currentState!.validate()){
+                            SigningUpUser();
+                          }
                         },
                         child: Container(
                           padding: EdgeInsets.symmetric(vertical: 7),

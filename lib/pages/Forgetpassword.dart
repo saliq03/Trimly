@@ -12,6 +12,7 @@ class Forgetpassword extends StatefulWidget {
 class _ForgetpasswordState extends State<Forgetpassword> {
   final GlobalKey<FormState> _formKey=GlobalKey<FormState>();
   TextEditingController emailController=TextEditingController();
+  final emailRegex = RegExp(r'^[^@]+@[^@]+\.[^@]+');
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -65,14 +66,20 @@ class _ForgetpasswordState extends State<Forgetpassword> {
                   if(value==null||value.isEmpty){
                     return "Please enter email";
                   }
+                  else if(!emailRegex.hasMatch(emailController.text.trim())) {
+                    return "Enter valid Email";
+                  }
                   return null;
               },),
               SizedBox(height: 40),
               GestureDetector(
                 onTap: (){
                   FocusScope.of(context).unfocus();
-               _formKey.currentState!.validate();
-               ResetPassword();
+                  if(_formKey.currentState!.validate()){
+                    ResetPassword();
+                  }
+
+
                 },
                 child: Container(
                   padding: EdgeInsets.symmetric(vertical: 5),
