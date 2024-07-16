@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:random_string/random_string.dart';
 import 'package:trimly/Database/Databasemethods.dart';
 
 import '../Database/SharedPrefrenceHelper.dart';
@@ -128,6 +129,7 @@ class _BookingState extends State<Booking> {
   }
 
   UploadBooking() async {
+   // var id=randomAlphaNumeric(10);
     showDialog(context: context,
         builder: (context)=>Center(child: CircularProgressIndicator()));
     Name=await SharedprefrenceHelper().GetUserName();
@@ -138,7 +140,8 @@ class _BookingState extends State<Booking> {
         widget.Service,
         "${_selectedDate.day}/${_selectedDate.month}/${_selectedDate.year}",
         _selectedTime.format(context).toString()).then((value){
-      Navigator.of(context).popUntil((route)=>route.isCurrent);
+      Navigator.pop(context);
+      Navigator.pop(context);
       ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Center(
               child: Text("Service has been added Successfully.", style: TextStyle(

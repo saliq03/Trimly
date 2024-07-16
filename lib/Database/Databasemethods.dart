@@ -15,8 +15,7 @@ class Databasemethods{
   AddBooking(String email,String name,String service,String date,String time)async{
     await FirebaseFirestore.instance.
     collection("Bookings").
-    doc(email).
-    set({
+    add({
       "Email":email,
       "Name": name,
       "Service": service,
