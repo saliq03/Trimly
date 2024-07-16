@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:trimly/Admin/AllBookings.dart';
 
 class AdminLogin extends StatefulWidget {
   const AdminLogin({super.key});
@@ -46,17 +47,17 @@ class _AdminLoginState extends State<AdminLogin> {
                   key: _formKey,
                   child: Column(crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text("Email",style: TextStyle(fontWeight: FontWeight.w500,fontSize: 25,color: Color(0xFFB91635),),),
+                      Text("Username",style: TextStyle(fontWeight: FontWeight.w500,fontSize: 25,color: Color(0xFFB91635),),),
                       SizedBox(height: 10,),
                       TextFormField(
                           controller: emailController,
                           decoration: InputDecoration(
-                              hintText: "Email",
+                              hintText: "Username",
                               prefixIcon: Icon(Icons.email_outlined)
                           ),
                           validator: (value){
                             if(value==null||value.isEmpty){
-                              return "Please enter email";
+                              return "Please enter Username";
                             }
                             return null;
                           }),
@@ -80,8 +81,10 @@ class _AdminLoginState extends State<AdminLogin> {
                       GestureDetector(
                         onTap: (){
                           FocusScope.of(context).unfocus();
-                          _formKey.currentState!.validate();
-                          // Navigator.push(context, MaterialPageRoute(builder: (context)=>Home()));
+                         if(_formKey.currentState!.validate()){
+                         Navigator.push(context, MaterialPageRoute(builder: (context)=>AllBookings()));
+                        }
+
                         },
                         child: Container(
                           padding: EdgeInsets.symmetric(vertical: 7),
