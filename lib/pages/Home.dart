@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
 import '../Database/SharedPrefrenceHelper.dart';
 import 'Booking.dart';
@@ -12,6 +15,7 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   late String? name;
+  File? pickedImage;
 
 @override
   void initState() {
@@ -34,8 +38,9 @@ class _HomeState extends State<Home> {
                     Text(name!,style: TextStyle(fontSize: 25,fontWeight: FontWeight.bold),)
                   ]),
                 GestureDetector(onTap: (){
+                  ShowImageUploadDialog();
                 },
-                    child: Image.asset("assets/images/bg.png",height: 70,width: 70,fit: BoxFit.cover,))
+                    child: pickedImage!=null? Image.file(pickedImage!):Image.asset("assets/images/bg.png",height: 70,width: 70,fit: BoxFit.cover,))
               ])),
           Row(mainAxisAlignment:MainAxisAlignment.end, children: [GestureDetector(onTap: (){
             Navigator.pop(context);
@@ -109,6 +114,60 @@ class _HomeState extends State<Home> {
   GetSharedprefData()async{
     name=await SharedprefrenceHelper().GetUserName();
     setState(() {});
+  }
+
+  PickImage()async{
+  try{
+    final image=await ImagePicker().pickImage(source: ImageSource.gallery);
+    if(image==null)return;
+    final tempimage=File(image.path);
+    pickedImage=tempimage;
+    setState(() {});
+  }
+    catch (ex){
+
+    print(ex.toString());
+    }
+  }
+
+  ShowImageUploadDialog(){
+    return showDialog(context: context, builder: (BuildContext){
+      return AlertDialog(
+        title: Container(
+          child: Column(
+            children: [
+              Text("Upload Profile Photo"),
+              GestureDetector(
+                onTap: (){
+                  PickImage();
+                },
+                child: Container(
+                  width: 100,
+                  height: 100,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(11),
+                    border: Border.all(color: Colors.black),
+                  ),
+                  child: Center(child: Icon(Icons.camera_alt_outlined)),),
+              ),
+
+              GestureDetector(
+                onTap: (){
+                Navigator.pop(context);
+                },
+                child: Container(
+                  padding: EdgeInsets.symmetric(vertical: 5),
+                  width: 100,
+                  decoration: BoxDecoration(
+                      color: Colors.orangeAccent,
+                      borderRadius: BorderRadius.circular(22)),
+                  child: Center(child: Text("Upload",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30,color: Colors.white),)),),
+              ),
+            ],
+          ),
+        ),
+      );
+    });
   }
   }
 
