@@ -22,6 +22,7 @@ class _BookingState extends State<Booking> {
   TimeOfDay _selectedTime=TimeOfDay.now();
   late String? Email;
   late String? Name;
+  late String myImage="https://firebasestorage.googleapis.com/v0/b/trimly-61b9f.appspot.com/o/Hair%20Cutting.png?alt=media&token=2ff33638-7c90-4cf7-b172-9693c5533083";
 
   Future<void> SelectDate()async{
     final DateTime? picked=await showDatePicker(
@@ -134,12 +135,17 @@ class _BookingState extends State<Booking> {
         builder: (context)=>Center(child: CircularProgressIndicator()));
     Name=await SharedprefrenceHelper().GetUserName();
     Email=await SharedprefrenceHelper().GetUserEmail();
+    var tempimage=await SharedprefrenceHelper().GetUserImage();
+    if(tempimage!=null){
+      myImage=tempimage;
+    }
     await Databasemethods().AddBooking(
+
         Email!,
         Name!,
         widget.Service,
         "${_selectedDate.day}/${_selectedDate.month}/${_selectedDate.year}",
-        _selectedTime.format(context).toString()).then((value){
+        _selectedTime.format(context).toString(),myImage).then((value){
       Navigator.pop(context);
       Navigator.pop(context);
       ScaffoldMessenger.of(context).showSnackBar(

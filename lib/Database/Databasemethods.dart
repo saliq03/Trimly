@@ -12,7 +12,7 @@ class Databasemethods{
     });
   }
 
-  AddBooking(String email,String name,String service,String date,String time)async{
+  AddBooking(String email,String name,String service,String date,String time,String image)async{
     await FirebaseFirestore.instance.
     collection("Bookings").
     add({
@@ -20,7 +20,8 @@ class Databasemethods{
       "Name": name,
       "Service": service,
       "Date": date,
-      "Time": time
+      "Time": time,
+      "Image": image
     });
   }
 }
