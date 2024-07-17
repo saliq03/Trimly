@@ -24,4 +24,10 @@ class Databasemethods{
       "Image": image
     });
   }
+  
+  UpdateUserProfileImage(String email,String image)async{
+    await FirebaseFirestore.instance.collection("Users").doc(email).update({
+      "Image":image
+    });
+  }
 }

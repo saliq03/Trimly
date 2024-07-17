@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:trimly/Database/Databasemethods.dart';
 
 import '../Database/SharedPrefrenceHelper.dart';
 import 'Booking.dart';
@@ -40,7 +41,8 @@ class _HomeState extends State<Home> {
                 GestureDetector(onTap: (){
                   ShowImageUploadDialog();
                 },
-                    child: pickedImage!=null? Image.file(pickedImage!):Image.asset("assets/images/bg.png",height: 70,width: 70,fit: BoxFit.cover,))
+                    child: ClipRRect(borderRadius: BorderRadius.circular(35),
+                        child: pickedImage!=null? Image.file(pickedImage!,height: 70,width: 70,fit: BoxFit.cover,): Image.asset("assets/images/bg.png",height: 70,width: 70,fit: BoxFit.cover,)))
               ])),
           Row(mainAxisAlignment:MainAxisAlignment.end, children: [GestureDetector(onTap: (){
             Navigator.pop(context);
@@ -133,10 +135,12 @@ class _HomeState extends State<Home> {
   ShowImageUploadDialog(){
     return showDialog(context: context, builder: (BuildContext){
       return AlertDialog(
+        backgroundColor: Colors.white,
         title: Container(
           child: Column(
             children: [
               Text("Upload Profile Photo"),
+              SizedBox(height: 10,),
               GestureDetector(
                 onTap: (){
                   PickImage();
@@ -148,20 +152,22 @@ class _HomeState extends State<Home> {
                     borderRadius: BorderRadius.circular(11),
                     border: Border.all(color: Colors.black),
                   ),
-                  child: Center(child: Icon(Icons.camera_alt_outlined)),),
+                  child: pickedImage!=null? ClipRRect(  borderRadius: BorderRadius.circular(11),
+                      child: Image.file(pickedImage!,height: 100,width: 100,fit: BoxFit.cover,)):Center(child: Icon(Icons.camera_alt_outlined)),),
               ),
-
+              SizedBox(height: 10,),
               GestureDetector(
                 onTap: (){
+                  Databasemethods().UpdateUserProfileImage("javidsaliq@gmail.com", "cde");
                 Navigator.pop(context);
                 },
                 child: Container(
-                  padding: EdgeInsets.symmetric(vertical: 5),
-                  width: 100,
+                  padding: EdgeInsets.symmetric(vertical: 7),
+                  width: 110,
                   decoration: BoxDecoration(
                       color: Colors.orangeAccent,
                       borderRadius: BorderRadius.circular(22)),
-                  child: Center(child: Text("Upload",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30,color: Colors.white),)),),
+                  child: Center(child: Text("Upload",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 25,color: Colors.white),)),),
               ),
             ],
           ),
