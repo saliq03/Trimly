@@ -161,7 +161,7 @@ class _LoginUserState extends State<LoginUser> {
                   password: passwordController.text);
               Navigator.of(context).popUntil((route)=>route.isFirst);
               FocusScope.of(context).unfocus();
-              SetSharedpref(user.data()["Name"]);
+              SetSharedpref(user.data()["Name"],user.data()["Image"]);
               Navigator.push(context, MaterialPageRoute(builder: (context)=>Home()));
 
             }
@@ -190,9 +190,10 @@ class _LoginUserState extends State<LoginUser> {
       });
     }}
 
-  SetSharedpref(String name){
+  SetSharedpref(String name,String image){
     SharedprefrenceHelper().SetLoginkey(true);
     SharedprefrenceHelper().SetUserName(name);
     SharedprefrenceHelper().SetUserEmail(emailController.text);
+    SharedprefrenceHelper().SetUserImage(image);
   }
 }

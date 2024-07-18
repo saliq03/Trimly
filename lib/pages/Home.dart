@@ -2,8 +2,9 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:random_string/random_string.dart';
 import 'package:trimly/Database/Databasemethods.dart';
-
+import 'package:firebase_storage/firebase_storage.dart';
 import '../Database/SharedPrefrenceHelper.dart';
 import 'Booking.dart';
 
@@ -161,7 +162,12 @@ class _HomeState extends State<Home> {
               ),
               SizedBox(height: 10,),
               GestureDetector(
-                onTap: (){
+                onTap: ()async{
+                  if(pickedImage!=null){
+                    String id = randomAlphaNumeric(10);
+                   FirebaseStorage storage=FirebaseStorage.instanceFor(bucket: "trimly-61b9f.appspot.com");
+                   TaskSnapshot snapshot=await storage.ref("ProfileImage").child(id).putFile(pickedImage!);
+                  }
                   Databasemethods().UpdateUserProfileImage("javidsaliq@gmail.com", "cde");
                 Navigator.pop(context);
                 },
