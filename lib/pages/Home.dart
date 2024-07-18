@@ -16,6 +16,7 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   late String? name;
+  late String? image;
   File? pickedImage;
 
 @override
@@ -38,12 +39,14 @@ class _HomeState extends State<Home> {
                     Text("Hello,",style: TextStyle(fontSize: 25,),),
                     Text(name!,style: TextStyle(fontSize: 25,fontWeight: FontWeight.bold),)
                   ]),
+
                 GestureDetector(onTap: (){
                   ShowImageUploadDialog();
                 },
                     child: ClipRRect(borderRadius: BorderRadius.circular(35),
-                        child: pickedImage!=null? Image.file(pickedImage!,height: 70,width: 70,fit: BoxFit.cover,): Image.asset("assets/images/bg.png",height: 70,width: 70,fit: BoxFit.cover,)))
+                        child: pickedImage!=null? Image.file(pickedImage!,height: 70,width: 70,fit: BoxFit.cover,): Image.network(image!,height: 70,width: 70,fit: BoxFit.cover,)))
               ])),
+
           Row(mainAxisAlignment:MainAxisAlignment.end, children: [GestureDetector(onTap: (){
             Navigator.pop(context);
             SharedprefrenceHelper().SetLoginkey(false);
@@ -115,6 +118,7 @@ class _HomeState extends State<Home> {
   }
   GetSharedprefData()async{
     name=await SharedprefrenceHelper().GetUserName();
+    image=await SharedprefrenceHelper().GetUserImage();
     setState(() {});
   }
 

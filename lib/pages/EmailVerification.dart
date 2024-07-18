@@ -93,12 +93,14 @@ class _EmailverificationState extends State<Emailverification>{
   }
 
   UploadUserDetails(){
-    Databasemethods().AddUserDetails(widget.name, widget.email);
+    Databasemethods().AddUserDetails(widget.name, widget.email,
+        "https://firebasestorage.googleapis.com/v0/b/trimly-61b9f.appspot.com/o/Hair%20Cutting.png?alt=media&token=2ff33638-7c90-4cf7-b172-9693c5533083");
   }
 
   SetSharedpref(){
     SharedprefrenceHelper().SetLoginkey(true);
     SharedprefrenceHelper().SetUserName(widget.name);
     SharedprefrenceHelper().SetUserEmail(widget.email);
+    SharedprefrenceHelper().SetUserImage("https://firebasestorage.googleapis.com/v0/b/trimly-61b9f.appspot.com/o/Hair%20Cutting.png?alt=media&token=2ff33638-7c90-4cf7-b172-9693c5533083");
   }
 }
