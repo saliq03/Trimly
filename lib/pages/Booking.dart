@@ -1,10 +1,7 @@
-import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:random_string/random_string.dart';
 import 'package:trimly/Database/Databasemethods.dart';
-
 import '../Database/SharedPrefrenceHelper.dart';
 
 class Booking extends StatefulWidget {
@@ -20,9 +17,9 @@ class Booking extends StatefulWidget {
 class _BookingState extends State<Booking> {
   DateTime _selectedDate=DateTime.now();
   TimeOfDay _selectedTime=TimeOfDay.now();
-  late String? Email;
-  late String? Name;
-  late String myImage="https://firebasestorage.googleapis.com/v0/b/trimly-61b9f.appspot.com/o/Hair%20Cutting.png?alt=media&token=2ff33638-7c90-4cf7-b172-9693c5533083";
+   String? Email;
+   String? Name;
+   String? myImage;
 
   Future<void> SelectDate()async{
     final DateTime? picked=await showDatePicker(
@@ -135,17 +132,14 @@ class _BookingState extends State<Booking> {
         builder: (context)=>Center(child: CircularProgressIndicator()));
     Name=await SharedprefrenceHelper().GetUserName();
     Email=await SharedprefrenceHelper().GetUserEmail();
-    var tempimage=await SharedprefrenceHelper().GetUserImage();
-    if(tempimage!=null){
-      myImage=tempimage;
-    }
+    myImage= await SharedprefrenceHelper().GetUserImage();
     await Databasemethods().AddBooking(
 
         Email!,
         Name!,
         widget.Service,
         "${_selectedDate.day}/${_selectedDate.month}/${_selectedDate.year}",
-        _selectedTime.format(context).toString(),myImage).then((value){
+        _selectedTime.format(context).toString(),myImage!).then((value){
       Navigator.pop(context);
       Navigator.pop(context);
       ScaffoldMessenger.of(context).showSnackBar(

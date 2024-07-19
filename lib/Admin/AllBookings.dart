@@ -36,7 +36,7 @@ class _AllBookingsState extends State<AllBookings> {
                             color:Color(0xFF3E2723)),
                         child: Column(
                           children: [
-                            CircleAvatar(child:Image.network("https://firebasestorage.googleapis.com/v0/b/trimly-61b9f.appspot.com/o/Hair%20Cutting.png?alt=media&token=2ff33638-7c90-4cf7-b172-9693c5533083"),backgroundColor: Colors.white,radius: 50,),
+                            CircleAvatar(child:Image.network(ds["Image"]),backgroundColor: Colors.white,radius: 50,),
                             Text(ds["Name"],style: TextStyle(color: Colors.white,fontSize: 25,fontWeight: FontWeight.bold),),
                             Text(ds["Email"],style: TextStyle(color: Colors.white,fontSize: 20),),
                             Text(ds["Service"],style: TextStyle(color: Colors.white,fontSize: 20),),

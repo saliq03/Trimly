@@ -1,5 +1,5 @@
 import 'dart:io';
-
+import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:random_string/random_string.dart';
@@ -16,9 +16,10 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  late String? name;
-  late String? image;
-  File? pickedImage;
+   String? name;
+   String? image;
+   File? pickedImage;
+   String? email;
 
 @override
   void initState() {
@@ -120,6 +121,7 @@ class _HomeState extends State<Home> {
   GetSharedprefData()async{
     name=await SharedprefrenceHelper().GetUserName();
     image=await SharedprefrenceHelper().GetUserImage();
+    email =await SharedprefrenceHelper().GetUserEmail();
     setState(() {});
   }
 
@@ -128,14 +130,24 @@ class _HomeState extends State<Home> {
     final image=await ImagePicker().pickImage(source: ImageSource.gallery);
     if(image==null)return;
     final tempimage=File(image.path);
-    pickedImage=tempimage;
-    setState(() {});
+    CompressImage(tempimage);
   }
     catch (ex){
 
     print(ex.toString());
     }
   }
+   CompressImage(File file) async {
+     var compressedImage= await FlutterImageCompress.compressAndGetFile(
+         file.absolute.path,
+         "${file.absolute.parent.path}/temp.jpg",
+     quality: 80,
+     minHeight: 500,
+     minWidth: 500);
+     pickedImage=File(compressedImage!.path);
+     setState(() {});
+
+   }
 
   ShowImageUploadDialog(){
     return showDialog(context: context, builder: (BuildContext){
@@ -164,12 +176,25 @@ class _HomeState extends State<Home> {
               GestureDetector(
                 onTap: ()async{
                   if(pickedImage!=null){
+                    showDialog(context: context,
+                        builder: (context)=>Center(child: CircularProgressIndicator()));
+
                     String id = randomAlphaNumeric(10);
                    FirebaseStorage storage=FirebaseStorage.instanceFor(bucket: "trimly-61b9f.appspot.com");
                    TaskSnapshot snapshot=await storage.ref("ProfileImage").child(id).putFile(pickedImage!);
+                   String imageUrl= await snapshot.ref.getDownloadURL();
+                    Databasemethods().UpdateUserProfileImage(email!, imageUrl).then((value){
+                      SharedprefrenceHelper().SetUserImage(imageUrl);
+                      Navigator.pop(context);
+                      Navigator.pop(context);
+                      ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Center(child: Text("Image Uploaded Sucessfully")),
+                          backgroundColor: Colors.green,));
+
+                    });
                   }
-                  Databasemethods().UpdateUserProfileImage("javidsaliq@gmail.com", "cde");
-                Navigator.pop(context);
+
+
                 },
                 child: Container(
                   padding: EdgeInsets.symmetric(vertical: 7),
@@ -185,5 +210,6 @@ class _HomeState extends State<Home> {
       );
     });
   }
+
   }
 
