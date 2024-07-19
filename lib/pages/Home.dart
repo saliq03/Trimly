@@ -190,11 +190,8 @@ class _HomeState extends State<Home> {
                       ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(content: Center(child: Text("Image Uploaded Sucessfully")),
                           backgroundColor: Colors.green,));
-
                     });
                   }
-
-
                 },
                 child: Container(
                   padding: EdgeInsets.symmetric(vertical: 7),

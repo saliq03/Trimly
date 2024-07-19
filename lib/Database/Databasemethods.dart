@@ -25,6 +25,11 @@ class Databasemethods{
     });
   }
   
+  DeleteBooking(String id)async{
+    await FirebaseFirestore.instance.collection("Bookings").
+    doc(id).
+    delete();
+  }
   UpdateUserProfileImage(String email,String image)async{
     await FirebaseFirestore.instance.collection("Users").doc(email).update({
       "Image":image

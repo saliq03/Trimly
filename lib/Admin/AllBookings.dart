@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:trimly/Database/Databasemethods.dart';
 
 class AllBookings extends StatefulWidget {
   const AllBookings({super.key});
@@ -16,6 +17,9 @@ class _AllBookingsState extends State<AllBookings> {
       appBar: AppBar(
         title: Text("Bookings",style: TextStyle(fontSize: 30,fontWeight: FontWeight.bold)),
         centerTitle: true,
+        actions: [IconButton(onPressed: (){
+          Navigator.pop(context);
+        }, icon: Icon(Icons.logout,color: Colors.black,))],
         backgroundColor: Colors.white,
       ),
       body:StreamBuilder(
@@ -28,20 +32,35 @@ class _AllBookingsState extends State<AllBookings> {
                     itemBuilder: (context,index){
                       var ds=snapshot.data!.docs[index];
                       return Container(
-                        padding: EdgeInsets.all(10),
-                        margin: EdgeInsets.symmetric(horizontal: 20,vertical: 5),
+                        padding: EdgeInsets.all(15),
+                        margin: EdgeInsets.symmetric(horizontal: 20,vertical: 8),
                         width: MediaQuery.of(context).size.width,
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(22),
-                            color:Color(0xFF3E2723)),
+                            gradient: LinearGradient(colors: [Color(0xFF6C3F31),Color(0xFF86563C),Color(0xFF4E312D),],begin: Alignment.topLeft,end: Alignment.bottomRight)),
                         child: Column(
                           children: [
-                            CircleAvatar(child:Image.network(ds["Image"]),backgroundColor: Colors.white,radius: 50,),
-                            Text(ds["Name"],style: TextStyle(color: Colors.white,fontSize: 25,fontWeight: FontWeight.bold),),
-                            Text(ds["Email"],style: TextStyle(color: Colors.white,fontSize: 20),),
-                            Text(ds["Service"],style: TextStyle(color: Colors.white,fontSize: 20),),
-                            Text(ds["Date"],style: TextStyle(color: Colors.white,fontSize: 20),),
-                            Text(ds["Time"],style: TextStyle(color: Colors.white,fontSize: 20),)
+                            ClipRRect(borderRadius: BorderRadius.circular(35),
+                                child: Image.network(ds["Image"],fit: BoxFit.cover,height: 70,width: 70,)),
+                            SizedBox(height: 10),
+                            Text("Service: ${ds["Service"]}",style: TextStyle(color: Colors.white,fontSize: 20,fontWeight: FontWeight.bold),),
+                            Text("Name: ${ds["Name"]}",style: TextStyle(color: Colors.white,fontSize: 20,fontWeight: FontWeight.bold),),
+                            // Text("Email: ${ds["Email"]}",style: TextStyle(color: Colors.white,fontSize: 20,fontWeight: FontWeight.bold),),
+                            Text("Date: ${ds["Date"]}",style: TextStyle(color: Colors.white,fontSize: 20,fontWeight: FontWeight.bold),),
+                            Text("Time: ${ds["Time"]}",style: TextStyle(color: Colors.white,fontSize: 20,fontWeight: FontWeight.bold),),
+                            SizedBox(height: 10),
+                            GestureDetector(
+                              onTap: (){
+                                Databasemethods().DeleteBooking(ds.id);
+                              },
+                              child: Container(
+                                padding: EdgeInsets.symmetric(vertical: 2),
+                                width: 100,
+                                decoration: BoxDecoration(
+                                    color: Colors.orangeAccent,
+                                    borderRadius: BorderRadius.circular(22)),
+                                child: Center(child: Text("Done",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 22,color: Colors.white),)),),
+                            ),
                           ],
                         ),
                       );
