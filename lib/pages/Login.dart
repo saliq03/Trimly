@@ -213,13 +213,17 @@ class _LoginUserState extends State<LoginUser> {
     return GestureDetector(
       onTap: ontap,
       child: Container(
-        width: 60,
-        height: 60,
+        height: 55,
         decoration: BoxDecoration(
           color: Colors.black12,
           borderRadius: BorderRadius.circular(11)
         ),
-        child: Icon(CupertinoIcons.phone,color: Colors.green,),
+        child: Row(mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset("assets/icons/googlelogo.png",width: 40,height: 40,),
+            Text("   Sign in with Google")
+          ],
+        ),
       ),
     );
   }
