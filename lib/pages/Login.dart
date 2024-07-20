@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:trimly/Services/Auth_Services.dart';
 import 'package:trimly/pages/Forgetpassword.dart';
 import 'package:trimly/pages/Home.dart';
 import 'package:trimly/pages/Signup.dart';
@@ -44,8 +45,8 @@ class _LoginUserState extends State<LoginUser> {
             Align(
               alignment: Alignment.bottomCenter,
               child: Container(
-                margin: EdgeInsets.only(top: mediaQuery.height*.06),
-                padding: EdgeInsets.only(top: 40,left: 30,right: 30),
+                margin: EdgeInsets.only(top: mediaQuery.height*.045),
+                padding: EdgeInsets.only(top: 20,left: 30,right: 30),
                 width: mediaQuery.width,
                 height: mediaQuery.height/1.35,
                 decoration: BoxDecoration(
@@ -90,17 +91,17 @@ class _LoginUserState extends State<LoginUser> {
                             }
                             return null;
                           }),
-                      SizedBox(height: 20,),
+                      SizedBox(height: 3,),
 
                       Row(mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           GestureDetector(onTap: (){
                             Navigator.push(context, MaterialPageRoute(builder: (context)=>Forgetpassword()));
                           },
-                              child: Text("Forgot Password?",style: TextStyle(color: Color(0xFF311937),fontSize: 20),)),
+                              child: Text("Forgot Password?",style: TextStyle(color: Color(0xFF311937),),)),
                         ],
                       ),
-                      SizedBox(height: 7,),
+                      SizedBox(height: 10,),
                       GestureDetector(
                         onTap: (){
                           if(_formKey.currentState!.validate()) {
@@ -119,9 +120,20 @@ class _LoginUserState extends State<LoginUser> {
                             borderRadius: BorderRadius.circular(22)),
                           child: Center(child: Text("Sign In",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30,color: Colors.white),)),),
                       ),
-
+                       SizedBox(height: 15),
+                      Row(mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          Expanded(child: Divider(thickness: 1,)),
+                          Text(" Or continue with ",style: TextStyle(color: Color(0xFF311937),fontSize: 15)),
+                          Expanded(child: Divider(thickness: 1,))
+                        ],
+                      ),
+                      SizedBox(height: 10,),
+                      SigninTile(image: "jio", ontap: (){
+                        AuthServices().SignInWithGoogle(context);
+                      }),
                       Spacer(),
-                      Divider(thickness: 2,),
+                      Divider(thickness: 1,),
                       GestureDetector(
                         onTap: (){
                           Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>SignupUser()));
@@ -132,7 +144,7 @@ class _LoginUserState extends State<LoginUser> {
                             Text("Sign up",style: TextStyle(color: Color(0xFF621d3c),fontSize: 15,fontWeight: FontWeight.bold),),
                           ]),
                       ),
-                      SizedBox(height: 30,)
+                      SizedBox(height: 10,)
 
 
                     ],
@@ -195,5 +207,20 @@ class _LoginUserState extends State<LoginUser> {
     SharedprefrenceHelper().SetUserName(name);
     SharedprefrenceHelper().SetUserEmail(emailController.text);
     SharedprefrenceHelper().SetUserImage(image);
+  }
+
+  SigninTile({ required String image,required void Function() ontap}){
+    return GestureDetector(
+      onTap: ontap,
+      child: Container(
+        width: 60,
+        height: 60,
+        decoration: BoxDecoration(
+          color: Colors.black12,
+          borderRadius: BorderRadius.circular(11)
+        ),
+        child: Icon(CupertinoIcons.phone,color: Colors.green,),
+      ),
+    );
   }
 }
