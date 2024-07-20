@@ -11,6 +11,10 @@ import '../Database/SharedPrefrenceHelper.dart';
 class AuthServices{
 
   SignInWithGoogle(BuildContext context)async{
+    showDialog(context: context,
+        builder: (context)=>Center(child: CircularProgressIndicator()));
+
+    // signing in with google logic starts from here
    final GoogleSignInAccount? guser= await GoogleSignIn().signIn();
 
     final GoogleSignInAuthentication gauth=await guser!.authentication;
@@ -21,6 +25,8 @@ class AuthServices{
     );
 
     UserCredential result= await FirebaseAuth.instance.signInWithCredential(crediential);
+    // To here
+
     User? userDetails=result.user;
 
     if(result!=null){
@@ -31,8 +37,12 @@ class AuthServices{
             SharedprefrenceHelper().SetUserName(userDetails!.displayName!);
             SharedprefrenceHelper().SetUserEmail(userDetails.email!);
             SharedprefrenceHelper().SetUserImage(userDetails.photoURL!);
-            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>Home()));
+            Navigator.of(context).popUntil((route)=>route.isFirst);
+            Navigator.push(context, MaterialPageRoute(builder: (context)=>Home()));
       });
+    }
+    else{
+      Navigator.pop(context);
     }
   }
 }
