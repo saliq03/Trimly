@@ -5,6 +5,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:random_string/random_string.dart';
 import 'package:trimly/Database/Databasemethods.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:trimly/pages/Login.dart';
 import '../Database/SharedPrefrenceHelper.dart';
 import 'Booking.dart';
 
@@ -50,7 +51,7 @@ class _HomeState extends State<Home> {
               ])),
 
           Row(mainAxisAlignment:MainAxisAlignment.end, children: [GestureDetector(onTap: (){
-            Navigator.pop(context);
+            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>LoginUser()));
             SharedprefrenceHelper().SetLoginkey(false);
           },
             child: Text("Log out   ",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,fontStyle: FontStyle.italic),),)],),

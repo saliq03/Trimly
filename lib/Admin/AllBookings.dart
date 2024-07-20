@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:trimly/Admin/Admin_Login.dart';
 import 'package:trimly/Database/Databasemethods.dart';
 
 import '../Database/SharedPrefrenceHelper.dart';
@@ -20,7 +21,7 @@ class _AllBookingsState extends State<AllBookings> {
         title: Text("Bookings",style: TextStyle(fontSize: 30,fontWeight: FontWeight.bold)),
         centerTitle: true,
         actions: [IconButton(onPressed: (){
-          Navigator.pop(context);
+          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>AdminLogin()));
           SharedprefrenceHelper().SetAdminLoginkey(false);
         }, icon: Icon(Icons.logout,color: Colors.black,))],
         backgroundColor: Colors.white,
