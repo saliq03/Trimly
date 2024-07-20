@@ -2,6 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:trimly/Database/Databasemethods.dart';
 
+import '../Database/SharedPrefrenceHelper.dart';
+
 class AllBookings extends StatefulWidget {
   const AllBookings({super.key});
 
@@ -19,6 +21,7 @@ class _AllBookingsState extends State<AllBookings> {
         centerTitle: true,
         actions: [IconButton(onPressed: (){
           Navigator.pop(context);
+          SharedprefrenceHelper().SetAdminLoginkey(false);
         }, icon: Icon(Icons.logout,color: Colors.black,))],
         backgroundColor: Colors.white,
       ),

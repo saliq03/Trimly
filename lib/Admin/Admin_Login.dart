@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:trimly/Admin/AllBookings.dart';
+import 'package:trimly/Database/SharedPrefrenceHelper.dart';
 
 class AdminLogin extends StatefulWidget {
   const AdminLogin({super.key});
@@ -139,6 +140,7 @@ class _AdminLoginState extends State<AdminLogin> {
              Navigator.of(context).popUntil((route)=>route.isFirst);
              Navigator.push(context, MaterialPageRoute(
                  builder: (context) => AllBookings()));
+             SharedprefrenceHelper().SetAdminLoginkey(true);
            }
            else{
              Navigator.pop(context);

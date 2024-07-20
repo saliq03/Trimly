@@ -3,7 +3,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:trimly/Database/Databasemethods.dart';
-import 'package:trimly/pages/try.dart';
+import 'package:trimly/pages/Home.dart';
+
+import '../Database/SharedPrefrenceHelper.dart';
+
 
 class AuthServices{
 
@@ -24,7 +27,11 @@ class AuthServices{
       Databasemethods().
       AddUserDetails(userDetails!.displayName!, userDetails.email!, userDetails.photoURL!)
           .then((value){
-            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>Try()));
+            SharedprefrenceHelper().SetLoginkey(true);
+            SharedprefrenceHelper().SetUserName(userDetails!.displayName!);
+            SharedprefrenceHelper().SetUserEmail(userDetails.email!);
+            SharedprefrenceHelper().SetUserImage(userDetails.photoURL!);
+            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>Home()));
       });
     }
   }

@@ -5,6 +5,7 @@ class SharedprefrenceHelper{
   static String userEmailKey="useremailkey";
   static String userNameKey="usernamekey";
   static String userImageKey="userimagekey";
+  static String adminLoginKey="adminloginkey";
 
   SetLoginkey(bool value) async {
     SharedPreferences pref=await SharedPreferences.getInstance();
@@ -23,6 +24,11 @@ class SharedprefrenceHelper{
     pref.setString(userImageKey,image);
   }
 
+  SetAdminLoginkey(bool value) async {
+    SharedPreferences pref=await SharedPreferences.getInstance();
+    pref.setBool(adminLoginKey, value);
+  }
+
   Future<bool?> GetLoginkey() async {
     SharedPreferences pref=await SharedPreferences.getInstance();
     return pref.getBool(loginKey);
@@ -39,6 +45,11 @@ class SharedprefrenceHelper{
   Future<String?> GetUserImage() async {
     SharedPreferences pref=await SharedPreferences.getInstance();
     return pref.getString(userImageKey);
+  }
+
+  Future<bool?> GetAdminLoginkey() async {
+    SharedPreferences pref=await SharedPreferences.getInstance();
+    return pref.getBool(adminLoginKey);
   }
 
 }

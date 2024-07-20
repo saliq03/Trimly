@@ -45,7 +45,7 @@ class _LoginUserState extends State<LoginUser> {
             Align(
               alignment: Alignment.bottomCenter,
               child: Container(
-                margin: EdgeInsets.only(top: mediaQuery.height*.045),
+                margin: EdgeInsets.only(top: mediaQuery.height*.04),
                 padding: EdgeInsets.only(top: 20,left: 30,right: 30),
                 width: mediaQuery.width,
                 height: mediaQuery.height/1.35,
@@ -75,7 +75,7 @@ class _LoginUserState extends State<LoginUser> {
                             return null;
 
                       }),
-                      SizedBox(height: 40,),
+                      SizedBox(height: 20,),
                       Text("Password",style: TextStyle(fontWeight: FontWeight.w500,fontSize: 25,color: Color(0xFFB91635),),),
                       SizedBox(height: 10,),
                       TextFormField(
