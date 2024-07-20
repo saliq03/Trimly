@@ -16,6 +16,7 @@ class _AdminLoginState extends State<AdminLogin> {
   TextEditingController passwordController=TextEditingController();
   final GlobalKey<FormState> _formKey=GlobalKey<FormState>();
   bool userfound=false;
+  bool hidepassword=true;
   @override
   Widget build(BuildContext context) {
     Size mediaQuery = MediaQuery
@@ -80,10 +81,11 @@ class _AdminLoginState extends State<AdminLogin> {
                       SizedBox(height: 10,),
                       TextFormField(
                           controller: passwordController,
-                          obscureText: true,
+                          obscureText: hidepassword,
                           decoration: InputDecoration(
                               hintText: "Password",
-                              prefixIcon: Icon(Icons.password_outlined)
+                              prefixIcon: Icon(Icons.password_outlined),
+                            suffixIcon: ShowingPassword()
                           ),
                           validator: (value) {
                             if (value == null || value.isEmpty) {
@@ -157,5 +159,14 @@ class _AdminLoginState extends State<AdminLogin> {
       }
       userfound=false;
     }
+
+    ShowingPassword(){
+    return IconButton(onPressed: (){
+      hidepassword=!hidepassword;
+      setState(() {});
+    },
+        icon: hidepassword?Icon(CupertinoIcons.eye_slash_fill) :Icon(CupertinoIcons.eye_fill));
+    }
+
   }
 

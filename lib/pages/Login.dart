@@ -6,7 +6,6 @@ import 'package:trimly/Services/Auth_Services.dart';
 import 'package:trimly/pages/Forgetpassword.dart';
 import 'package:trimly/pages/Home.dart';
 import 'package:trimly/pages/Signup.dart';
-
 import '../Database/SharedPrefrenceHelper.dart';
 
 class LoginUser extends StatefulWidget {
@@ -21,6 +20,7 @@ class _LoginUserState extends State<LoginUser> {
   TextEditingController passwordController=TextEditingController();
    final GlobalKey<FormState> _formKey=GlobalKey<FormState>();
   final emailRegex = RegExp(r'^[^@]+@[^@]+\.[^@]+');
+  bool hidepassword=true;
 
    bool userfound=false;
   @override
@@ -80,10 +80,11 @@ class _LoginUserState extends State<LoginUser> {
                       SizedBox(height: 10,),
                       TextFormField(
                         controller: passwordController,
-                        obscureText: true,
+                        obscureText: hidepassword,
                         decoration: InputDecoration(
                             hintText: "Password",
-                            prefixIcon: Icon(Icons.password_outlined)
+                            prefixIcon: Icon(Icons.password_outlined),
+                          suffixIcon: ShowingPassword()
                         ),
                           validator: (value){
                             if(value==null||value.isEmpty){
@@ -226,5 +227,13 @@ class _LoginUserState extends State<LoginUser> {
         ),
       ),
     );
+  }
+
+  ShowingPassword(){
+    return IconButton(onPressed: (){
+      hidepassword=!hidepassword;
+      setState(() {});
+    },
+        icon: hidepassword?Icon(CupertinoIcons.eye_slash_fill) :Icon(CupertinoIcons.eye_fill));
   }
 }

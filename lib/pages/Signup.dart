@@ -17,6 +17,7 @@ class _SignupUserState extends State<SignupUser> {
   TextEditingController passwordController=TextEditingController();
   final GlobalKey<FormState> _formKey=GlobalKey<FormState>();
   final emailRegex = RegExp(r'^[^@]+@[^@]+\.[^@]+');
+  bool hidepassword=true;
   @override
   Widget build(BuildContext context) {
     Size mediaQuery=MediaQuery.of(context).size;
@@ -86,10 +87,11 @@ class _SignupUserState extends State<SignupUser> {
                       Text("Password",style: TextStyle(fontWeight: FontWeight.w500,fontSize: 25,color: Color(0xFFB91635),),),
                       TextFormField(
                           controller: passwordController,
-                          obscureText: true,
+                          obscureText: hidepassword,
                           decoration: InputDecoration(
                               hintText: "Password",
-                              prefixIcon: Icon(Icons.password_outlined)
+                              prefixIcon: Icon(Icons.password_outlined),
+                            suffixIcon: ShowingPassword()
                           ),
                           validator: (value){
                             if(value==null||value.isEmpty){
@@ -173,4 +175,13 @@ class _SignupUserState extends State<SignupUser> {
       }
     }
   }
+
+  ShowingPassword(){
+    return IconButton(onPressed: (){
+      hidepassword=!hidepassword;
+      setState(() {});
+    },
+        icon: hidepassword?Icon(CupertinoIcons.eye_slash_fill) :Icon(CupertinoIcons.eye_fill));
+  }
+
 }
