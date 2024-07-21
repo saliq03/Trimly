@@ -1,0 +1,7 @@
+flutter_native_splash:
+  color: "F3E4D2"
+  fullscreen: true
+
+android_12:
+  color: "F3E4D2"
+  fullscreen: true

@@ -38,6 +38,7 @@ class AuthServices{
             SharedprefrenceHelper().SetUserEmail(userDetails.email!);
             SharedprefrenceHelper().SetUserImage(userDetails.photoURL!);
             Navigator.of(context).popUntil((route)=>route.isFirst);
+            print("i am gere");
             Navigator.push(context, MaterialPageRoute(builder: (context)=>Home()));
       });
     }
